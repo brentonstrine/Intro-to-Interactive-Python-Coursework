@@ -104,7 +104,7 @@ def draw(canvas):
     
     canvas.draw_circle([125,125], 155, 50, "black")
     canvas.draw_circle([125,125], 1, 5, "white")
-    canvas.draw_text(score, [210,20], 20, "grey")
+    canvas.draw_text(score, [200,20], 20, "grey")
 
     
 # create frame
