@@ -1,4 +1,4 @@
-# template for "Stopwatch: The Game"
+# This code will work if pasted into http://www.codeskulptor.org/
 import simplegui
 
 # define global variables
@@ -7,6 +7,8 @@ time = ""
 handCS = [125,0]
 handS = [125,0]
 handM = [125,0]
+plays = 0
+wins = 0
 
 
 # define helper function format that converts time
@@ -19,12 +21,25 @@ def format(t):
     
 # define event handlers for buttons; "Start", "Stop", "Reset"
 def start():
-    print "start!"
-    pass
+    timer.start()
+    
 def stop():
-    pass
+    global plays, wins
+    if(timer.is_running()):
+        timer.stop()
+        plays = plays + 1
+        if(handCS==[125,0]):
+            wins = wins + 1
 def reset():
-    pass
+    global ticks, time, handCS, handS, handM, plays, wins
+    timer.stop()
+    ticks = 0
+    time = ""
+    handCS = [125,0]
+    handS = [125,0]
+    handM = [125,0]
+    plays = 0
+    wins = 0
 
 # define event handler for timer with 0.1 sec interval
 def clock():
@@ -70,14 +85,8 @@ def setPos(handType):
 
 # define draw handler
 def draw(canvas):
+    score = str(wins) + " / " + str(plays)
     canvas.draw_text(str(time), [100,210], 26, "Red")
-    canvas.draw_line([125,125],handCS,1,"red")
-    
-    canvas.draw_line([123,123],handS,1,"#aae")
-    canvas.draw_line([127,123],handS,1,"#bbd")
-    canvas.draw_line([125,125],handS,2,"#00f")
-    canvas.draw_line([127,127],handS,1,"#ccc")
-    canvas.draw_line([123,127],handS,1,"#ddb")
     
     canvas.draw_line([123,123],handM,2,"#aaa")
     canvas.draw_line([127,123],handM,2,"#bbb")
@@ -85,8 +94,17 @@ def draw(canvas):
     canvas.draw_line([123,127],handM,2,"#ddd")
     canvas.draw_line([125,125],handM,2,"#fff")
     
+    canvas.draw_line([123,123],handS,1,"#aae")
+    canvas.draw_line([127,123],handS,1,"#bbd")
+    canvas.draw_line([125,125],handS,2,"#00f")
+    canvas.draw_line([127,127],handS,1,"#ccc")
+    canvas.draw_line([123,127],handS,1,"#ddb")
+    
+    canvas.draw_line([125,125],handCS,1,"red")
+    
     canvas.draw_circle([125,125], 155, 50, "black")
     canvas.draw_circle([125,125], 1, 5, "white")
+    canvas.draw_text(score, [210,20], 20, "grey")
 
     
 # create frame
@@ -101,4 +119,3 @@ timer = simplegui.create_timer(100, clock)
 
 # start frame
 frame.start()
-timer.start()
