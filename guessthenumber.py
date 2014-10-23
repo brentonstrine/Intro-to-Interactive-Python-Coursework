@@ -1,44 +1,27 @@
-# template for "Guess the number" mini-project
-# input will come from buttons and an input field
-# all output for the game will be printed in the console
+# CodeSkulptor runs Python programs in your browser.
+# Click the upper left button to run this simple demo.
 
+# CodeSkulptor runs in Chrome 18+, Firefox 11+, and Safari 6+.
+# Some features may work in other browsers, but do not expect
+# full functionality.  It does NOT run in Internet Explorer.
 
+import simplegui
 
-# helper function to start and restart the game
-def new_game():
-    # initialize global variables used in your code here
+message = "Welcome!"
 
-    # remove this when you add your code    
-    pass
+# Handler for mouse click
+def click():
+    global message
+    message = "Good job!"
 
+# Handler to draw on canvas
+def draw(canvas):
+    canvas.draw_text(message, [50,112], 48, "Red")
 
-# define event handlers for control panel
-def range100():
-    # button that changes the range to [0,100) and starts a new game 
-    
-    # remove this when you add your code    
-    pass
+# Create a frame and assign callbacks to event handlers
+frame = simplegui.create_frame("Home", 300, 200)
+frame.add_button("Click me", click)
+frame.set_draw_handler(draw)
 
-def range1000():
-    # button that changes the range to [0,1000) and starts a new game     
-    
-    pass
-    
-def input_guess(guess):
-    # main game logic goes here	
-    
-    # remove this when you add your code
-    pass
-
-    
-# create frame
-
-
-# register event handlers for control elements and start frame
-
-
-# call new_game 
-new_game()
-
-
-# always remember to check your completed program against the grading rubric
+# Start the frame animation
+frame.start()
