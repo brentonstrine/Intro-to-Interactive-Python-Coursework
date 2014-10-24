@@ -42,7 +42,7 @@ def keyup(key):
 def draw(canvas):
     # Gravity and air resistance
     vel[0] = (vel[0] / 1.005) + accel[0]
-    vel[1] = ((vel[1] + 0) / 1.005) + accel[1]
+    vel[1] = ((vel[1] + .8) / 1.005) + accel[1]
 
     # collide and reflect off of left hand side of canvas
     if ball_pos[0] <= BALL_RADIUS:
