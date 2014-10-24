@@ -8,26 +8,41 @@ HEIGHT = 400
 BALL_RADIUS = 20
 
 ball_pos = [WIDTH / 2, HEIGHT / 2]
-vel = [-990.0 / 60.0,  990.0 / 60.0]
+vel = [-0.0 / 60.0,  0.0 / 60.0]
 
 max = 0
+accel = [0,0]
 
 # define event handlers
 def keydown(key):
-    global vel
+    global accel
     if key == simplegui.KEY_MAP["left"]:
-        vel[0] -= 1
+        accel[0] = -1
     elif key == simplegui.KEY_MAP["right"]:
-        vel[0] += 1
+        accel[0] = 1
     elif key == simplegui.KEY_MAP["down"]:
-        vel[1] += 1
+        accel[1] = 1
     elif key == simplegui.KEY_MAP["up"]:
-        vel[1] -= 1   
+        accel[1] = -1
         
+
+# define event handlers
+def keyup(key):
+    global accel
+    if key == simplegui.KEY_MAP["left"]:
+        accel[0] = 0
+    elif key == simplegui.KEY_MAP["right"]:
+        accel[0] = 0
+    elif key == simplegui.KEY_MAP["down"]:
+        accel[1] = 0
+    elif key == simplegui.KEY_MAP["up"]:
+        accel[1] = 0
+        
+
 def draw(canvas):
     # Gravity and air resistance
-    vel[0] = vel[0] / 1.005
-    vel[1] = (vel[1] + .8) / 1.005
+    vel[0] = (vel[0] / 1.005) + accel[0]
+    vel[1] = ((vel[1] + 0) / 1.005) + accel[1]
 
     # collide and reflect off of left hand side of canvas
     if ball_pos[0] <= BALL_RADIUS:
@@ -66,6 +81,7 @@ frame = simplegui.create_frame("Ball physics", WIDTH, HEIGHT)
 # register event handlers
 frame.set_draw_handler(draw)
 frame.set_keydown_handler(keydown)
+frame.set_keyup_handler(keyup)
 
 
 # start frame
