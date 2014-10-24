@@ -1,5 +1,6 @@
-# Implementation of classic arcade game Pong
+# Paste this code into http://www.codeskulptor.org/ to see it work. 
 
+# Implementation of classic arcade game Pong
 import simplegui
 import random
 
@@ -13,6 +14,8 @@ HALF_PAD_WIDTH = PAD_WIDTH / 2
 HALF_PAD_HEIGHT = PAD_HEIGHT / 2
 LEFT = False
 RIGHT = True
+ball_pos = [WIDTH/2, HEIGHT/2]
+ball_vel = [10,10]
 
 # initialize ball_pos and ball_vel for new bal in middle of table
 # if direction is RIGHT, the ball's velocity is upper right, else upper left
@@ -33,10 +36,31 @@ def draw(canvas):
     canvas.draw_line([WIDTH / 2, 0],[WIDTH / 2, HEIGHT], 1, "White")
     canvas.draw_line([PAD_WIDTH, 0],[PAD_WIDTH, HEIGHT], 1, "White")
     canvas.draw_line([WIDTH - PAD_WIDTH, 0],[WIDTH - PAD_WIDTH, HEIGHT], 1, "White")
+
+    # collide and reflect off of left hand side of canvas
+    if ball_pos[0] <= BALL_RADIUS:
+       ball_pos[0] = BALL_RADIUS #prevent bounce errors
+       ball_vel[0] = - ball_vel[0]
+        
+    if ball_pos[0] >= WIDTH - 1 -BALL_RADIUS:
+       ball_pos[0] = WIDTH - 1 -BALL_RADIUS
+       ball_vel[0] = - ball_vel[0]
+        
+    if ball_pos[1] <= BALL_RADIUS:
+       ball_pos[1] = BALL_RADIUS
+       ball_vel[1] = - ball_vel[1]
+        
+    if ball_pos[1] >= HEIGHT - 1 -BALL_RADIUS:
+       ball_pos[1] = HEIGHT - 1 -BALL_RADIUS
+       ball_vel[1] = - ball_vel[1]
         
     # update ball
+    ball_pos[0] += ball_vel[0];
+    ball_pos[1] += ball_vel[1];
             
     # draw ball
+    canvas.draw_circle(ball_pos, BALL_RADIUS, 2, "Red", "White")
+
     
     # update paddle's vertical position, keep paddle on the screen
     
