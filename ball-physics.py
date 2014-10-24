@@ -1,3 +1,5 @@
+#paste this code into codeskulptor.org to see it work.
+
 import simplegui
 import random
 import math
