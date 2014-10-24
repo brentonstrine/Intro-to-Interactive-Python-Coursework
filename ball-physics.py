@@ -8,7 +8,7 @@ HEIGHT = 400
 BALL_RADIUS = 20
 
 ball_pos = [WIDTH / 2, HEIGHT / 2]
-vel = [-0.0 / 60.0,  0.0 / 60.0]
+vel = [-980.0 / 60.0,  1234.0 / 60.0]
 
 max = 0
 accel = [0,0]
