@@ -16,6 +16,13 @@ LEFT = False
 RIGHT = True
 ball_pos = [WIDTH/2, HEIGHT/2]
 ball_vel = [10,10]
+score1 = 0
+score2 = 0
+paddle1_pos = HEIGHT/2
+paddle1_vel = 0.0
+paddle2_pos = HEIGHT/2
+paddle2_vel = 0.0
+paddle_speed = 2
 
 # initialize ball_pos and ball_vel for new bal in middle of table
 # if direction is RIGHT, the ball's velocity is upper right, else upper left
@@ -28,9 +35,31 @@ def new_game():
     global paddle1_pos, paddle2_pos, paddle1_vel, paddle2_vel  # these are numbers
     global score1, score2  # these are ints
 
+def keydown(key):
+    global paddle1_vel, paddle2_vel
+    if key == simplegui.KEY_MAP["w"]:
+        paddle1_vel = - paddle_speed
+    elif key == simplegui.KEY_MAP["s"]:
+        paddle1_vel = paddle_speed
+    elif key == simplegui.KEY_MAP["up"]:
+        paddle2_vel = - paddle_speed
+    elif key == simplegui.KEY_MAP["down"]:
+        paddle2_vel = paddle_speed
+
+def keyup(key):
+    global paddle1_vel, paddle2_vel
+    if key == simplegui.KEY_MAP["w"]:
+        paddle1_vel = 0
+    elif key == simplegui.KEY_MAP["s"]:
+        paddle1_vel = 0
+    elif key == simplegui.KEY_MAP["up"]:
+        paddle2_vel = 0
+    elif key == simplegui.KEY_MAP["down"]:
+        paddle2_vel = 0
+    
 def draw(canvas):
     global score1, score2, paddle1_pos, paddle2_pos, ball_pos, ball_vel
- 
+
         
     # draw mid line and gutters
     canvas.draw_line([WIDTH / 2, 0],[WIDTH / 2, HEIGHT], 1, "White")
@@ -63,18 +92,16 @@ def draw(canvas):
 
     
     # update paddle's vertical position, keep paddle on the screen
+    paddle1_pos += paddle1_vel
+    paddle2_pos += paddle2_vel
     
     # draw paddles
+    canvas.draw_polygon([[1, paddle1_pos-HALF_PAD_HEIGHT], [PAD_WIDTH, paddle1_pos-HALF_PAD_HEIGHT], [PAD_WIDTH, paddle1_pos+HALF_PAD_HEIGHT], [0, paddle1_pos+HALF_PAD_HEIGHT]], 1, "#fff", "#cfd")
+    canvas.draw_polygon([[WIDTH, paddle2_pos-HALF_PAD_HEIGHT], [WIDTH-PAD_WIDTH, paddle2_pos-HALF_PAD_HEIGHT], [WIDTH-PAD_WIDTH, paddle2_pos+HALF_PAD_HEIGHT], [WIDTH, paddle2_pos+HALF_PAD_HEIGHT]], 1, "#fff", "#fcd")
+    
     
     # draw scores
         
-def keydown(key):
-    global paddle1_vel, paddle2_vel
-   
-def keyup(key):
-    global paddle1_vel, paddle2_vel
-
-
 # create frame
 frame = simplegui.create_frame("Pong", WIDTH, HEIGHT)
 frame.set_draw_handler(draw)
