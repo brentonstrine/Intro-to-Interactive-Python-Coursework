@@ -75,7 +75,8 @@ def draw(canvas):
     
     # Draw ball
     canvas.draw_circle(ball_pos, BALL_RADIUS, 2, "Red", "White")
-    canvas.draw_text(str(vel[1]), [20,20], 20, "white")
+    canvas.draw_text(str(int(vel[1])), [20,20], 20, "white")
+    canvas.draw_text("Use the arrow keys", [230,395], 20, "white")
 
 # create frame
 frame = simplegui.create_frame("Ball physics", WIDTH, HEIGHT)
