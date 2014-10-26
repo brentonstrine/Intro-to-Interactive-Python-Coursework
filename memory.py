@@ -26,11 +26,11 @@ def new_game():
 def evaluate_match():
         global guesses, cards
         #if not flipped && not current 
+    
         #if guesses.len() = 1, move on
         print "guesses: ", guesses
         if(len(guesses)==1):
             # if guesses.len() = 2, compare
-            print len(guesses)
             return False
         elif(len(guesses)==2):
             if(cards[guesses[0]]==cards[guesses[1]]):
@@ -52,25 +52,19 @@ def mouseclick(pos):
     global flipped, guesses
     # which card was clicked. 
     guess = pos[0] / 50
-    
-    #print guesses
-    # guesses . append()
-    guesses.append(guess)
-    #print guesses
-    # evaluate-match()
+    if(guess in guesses) or (guess in flipped):
+        return True
+    else:
+        guesses.append(guess)
+
     if(evaluate_match()):
         #add guessed cards to permanent flip
-        print flipped
-        print guesses[0]
         flipped[guesses[0]] = True
         flipped[guesses[1]] = True
-        print flipped
     else:
-        print "evaluates false"
+        pass
         
-    #if match is true, add cards to list of ignore
-    #if guesses.len() < total, you won game
-    pass
+
     
                         
 # cards are logically 50x100 pixels in size    
