@@ -10,8 +10,8 @@ flipped = {}
 
 # helper function to initialize globals
 def new_game():
-    global guesses, cards, flipped, turns
-    turns = 0
+    global guesses, cards, flipped, turn
+    turn = 0
     guesses = []
     flipped = {}
     cards = range(8) + range(8)
