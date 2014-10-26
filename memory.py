@@ -5,12 +5,14 @@ import random
 
 
 guesses = []
-cards = []
+cards = range(16)
 flipped = {}
 
 # helper function to initialize globals
 def new_game():
     global guesses, cards, flipped
+    guesses = []
+    flipped = {}
     cards = range(8) + range(8)
     random.shuffle(cards)
     print cards
@@ -31,19 +33,18 @@ def evaluate_match():
             print len(guesses)
             return False
         elif(len(guesses)==2):
-            print "first card", cards[guesses[0]]
-            print "secon card", cards[guesses[1]]
             if(cards[guesses[0]]==cards[guesses[1]]):
                 return True
             else:
-                guesses = []
                 return False
-        #    if match, return match, else return false. 
         #if guesses.len=3, erase guesses
+        elif(len(guesses)==3):
+            guesses = [guesses[2]]
+#            add first to guesses
         #elif(len(guesses)==3):
         #    guesses = []
     # else unflip
-    
+
 
      
 # define event handlers
@@ -51,20 +52,19 @@ def mouseclick(pos):
     global flipped, guesses
     # which card was clicked. 
     guess = pos[0] / 50
+    
     #print guesses
     # guesses . append()
     guesses.append(guess)
     #print guesses
     # evaluate-match()
     if(evaluate_match()):
-        print "evaluates true"
         #add guessed cards to permanent flip
         print flipped
         print guesses[0]
         flipped[guesses[0]] = True
         flipped[guesses[1]] = True
         print flipped
-        guesses = []
     else:
         print "evaluates false"
         
@@ -75,11 +75,33 @@ def mouseclick(pos):
                         
 # cards are logically 50x100 pixels in size    
 def draw(canvas):
+    global guesses, cards
     #draw lines
     
-    #draw flipped cards
+    #draw guessed cards
+    for idx in guesses:
+        posS = idx * 50
+        posE = posS + 50
+        topright = [posS, 0]
+        topleft = [posE, 0]
+        bottomright = [posS, 100]
+        bottomleft = [posE, 100]
+        num = str(cards[idx])        
+        canvas.draw_polygon([topleft, topright, bottomright, bottomleft], 1, "#fff", "#fcd")
+        canvas.draw_text(num,[posS + 18, 60], 30, "#000")
+
     
-    pass
+    #draw flipped cards
+    for idx in flipped:
+        posS = idx * 50
+        posE = posS + 50
+        topright = [posS, 0]
+        topleft = [posE, 0]
+        bottomright = [posS, 100]
+        bottomleft = [posE, 100]
+        num = str(cards[idx])        
+        canvas.draw_polygon([topleft, topright, bottomright, bottomleft], 1, "#fff", "#afd")
+        canvas.draw_text(num,[posS + 15, 60], 30, "#000")
 
 
 # create frame and add a button and labels
