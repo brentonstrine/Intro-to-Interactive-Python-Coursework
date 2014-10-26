@@ -3,7 +3,7 @@
 import simplegui
 import random
 
-
+turn = 0
 guesses = []
 cards = range(16)
 flipped = {}
@@ -49,12 +49,14 @@ def evaluate_match():
      
 # define event handlers
 def mouseclick(pos):
-    global flipped, guesses
+    global flipped, guesses, turn
     # which card was clicked. 
     guess = pos[0] / 50
     if(guess in guesses) or (guess in flipped):
         return True
     else:
+        turn += 1
+        label.set_text("Turns = " + str(turn / 2))
         guesses.append(guess)
 
     if(evaluate_match()):
@@ -105,6 +107,7 @@ def draw(canvas):
 # create frame and add a button and labels
 frame = simplegui.create_frame("Memory", 800, 100)
 frame.add_button("Reset", new_game)
+
 label = frame.add_label("Turns = 0")
 
 # register event handlers
