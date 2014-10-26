@@ -6,6 +6,7 @@ import random
 
 guesses = []
 cards = []
+flipped = {}
 
 # helper function to initialize globals
 def new_game():
@@ -21,19 +22,22 @@ def new_game():
     
     
 def evaluate_match():
-        global guesses
-        #if not flipped && not current
+        global guesses, cards
+        #if not flipped && not current 
         #if guesses.len() = 1, move on
+        print "guesses: ", guesses
         if(len(guesses)==1):
-            return "false"
             # if guesses.len() = 2, compare
-            #print len(guesses)
+            print len(guesses)
+            return False
         elif(len(guesses)==2):
-            if(guesses[0]==guesses[1]):#get value, not just number
-                return "true"
+            print "first card", cards[guesses[0]]
+            print "secon card", cards[guesses[1]]
+            if(cards[guesses[0]]==cards[guesses[1]]):
+                return True
             else:
-                return "false"
-            guesses = []
+                guesses = []
+                return False
         #    if match, return match, else return false. 
         #if guesses.len=3, erase guesses
         #elif(len(guesses)==3):
@@ -44,6 +48,7 @@ def evaluate_match():
      
 # define event handlers
 def mouseclick(pos):
+    global flipped, guesses
     # which card was clicked. 
     guess = pos[0] / 50
     #print guesses
@@ -51,7 +56,17 @@ def mouseclick(pos):
     guesses.append(guess)
     #print guesses
     # evaluate-match()
-    #print evaluate_match()
+    if(evaluate_match()):
+        print "evaluates true"
+        #add guessed cards to permanent flip
+        print flipped
+        print guesses[0]
+        flipped[guesses[0]] = True
+        flipped[guesses[1]] = True
+        print flipped
+        guesses = []
+    else:
+        print "evaluates false"
         
     #if match is true, add cards to list of ignore
     #if guesses.len() < total, you won game
