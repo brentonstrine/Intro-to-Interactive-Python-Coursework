@@ -6,10 +6,14 @@ import random
 
 guesses = []
 cards = []
-guessed = []
 
 # helper function to initialize globals
 def new_game():
+    global guesses, cards, flipped
+    cards = range(8) + range(8)
+    random.shuffle(cards)
+    print cards
+    
     #guesses, cards, guessed zeroed
     #cards = range(8), concat to self.randomize order
     
@@ -17,21 +21,38 @@ def new_game():
     
     
 def evaluate_match():
-    #if not flipped && not current
-        # if guesses.len() = 1, compare
+        global guesses
+        #if not flipped && not current
+        #if guesses.len() = 1, move on
+        if(len(guesses)==1):
+            return "false"
+            # if guesses.len() = 2, compare
+            #print len(guesses)
+        elif(len(guesses)==2):
+            if(guesses[0]==guesses[1]):#get value, not just number
+                return "true"
+            else:
+                return "false"
+            guesses = []
         #    if match, return match, else return false. 
-        #if guesses.len() = 0, move on
-        #if guesses.len=2, erase guesses
+        #if guesses.len=3, erase guesses
+        #elif(len(guesses)==3):
+        #    guesses = []
     # else unflip
- pass
     
 
      
 # define event handlers
 def mouseclick(pos):
     # which card was clicked. 
+    guess = pos[0] / 50
+    #print guesses
     # guesses . append()
+    guesses.append(guess)
+    #print guesses
     # evaluate-match()
+    #print evaluate_match()
+        
     #if match is true, add cards to list of ignore
     #if guesses.len() < total, you won game
     pass
