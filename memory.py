@@ -77,6 +77,10 @@ def mouseclick(pos):
 def draw(canvas):
     global guesses, cards
     #draw lines
+    for line in range(16):
+        x = line * 50
+        canvas.draw_line((x, 0), (x, 100), 1, '#666')
+        
     
     #draw guessed cards
     for idx in guesses:
